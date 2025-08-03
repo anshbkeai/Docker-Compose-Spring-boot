@@ -60,7 +60,7 @@
     // add in 
     const div = document.getElementById("comments");
     let comment = [];
-    fetch("http://localhost:8080/tickets/cc7bec9d-45ed-47d0-9de7-3e97636830d7/comments")
+    fetch("http://16.171.36.106:8080/tickets/cc7bec9d-45ed-47d0-9de7-3e97636830d7/comments")
     .then(resp => resp.json())
     .then(data => comment = data.filter((ele) => {
         console.log(ele);
@@ -81,7 +81,7 @@
         const coment = document.getElementById("comment").value;
         console.log(coment);
         
-        fetch("http://localhost:8080/tickets/cc7bec9d-45ed-47d0-9de7-3e97636830d7/comment", {
+        fetch("http://16.171.36.106:8080/tickets/cc7bec9d-45ed-47d0-9de7-3e97636830d7/comment", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
