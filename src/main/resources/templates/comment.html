@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commnet </title>
+</head>
+<style>
+  body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 2rem;
+  }
+
+  h1 {
+    color: #90caf9;
+  }
+
+  #comments {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    min-height: 100px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #bb86fc;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #2a2a2a;
+    border: 1px solid #555;
+    color: #e0e0e0;
+    border-radius: 4px;
+  }
+
+  input[type="text"]::placeholder {
+    color: #888;
+  }
+</style>
+
+<body>
+    <h1>Hello </h1>
+
+    <div id="comments">
+
+    </div>
+    <label for="comment">Enter you Comment </label>
+    <input type="text" name="coment" id="comment">
+    <button onclick={submit()}>Add</button>
+</body>
+<script>
+    // add in 
+    const div = document.getElementById("comments");
+    let comment = [];
+    fetch("http://localhost:8080/tickets/cc7bec9d-45ed-47d0-9de7-3e97636830d7/comments")
+    .then(resp => resp.json())
+    .then(data => comment = data.filter((ele) => {
+        console.log(ele);
+        
+        const comment = document.createElement("p");
+        comment.innerText = `${ele.commenter}  = ${ele.message}`
+        comment.style.color = "#e0e0e0";
+        comment.style.backgroundColor = "#1e1e1e";
+        comment.style.padding = "8px 12px";
+        comment.style.borderRadius = "6px";
+        comment.style.margin = "6px 0";
+        comment.style.border = "1px solid #333";
+
+        div.appendChild(comment);
+    }));
+
+    function submit() {
+        const coment = document.getElementById("comment").value;
+        console.log(coment);
+        
+        fetch("http://localhost:8080/tickets/cc7bec9d-45ed-47d0-9de7-3e97636830d7/comment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                commenter: "AGENT",
+                mesaage: document.getElementById("comment").value
+            })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Comment posted:", data);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    
+</script>
+</html>
